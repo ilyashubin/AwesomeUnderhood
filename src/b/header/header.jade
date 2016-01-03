@@ -1,0 +1,61 @@
+mixin header()
+  .header
+    .header__inner
+      .header__title
+        h1 Awesome<b>underhood</b>
+        h3 самые полезные *underhood твиты
+          
+      form(action='?').header__settings
+        .header__settings-sec
+          .header__settings-heading Underhood
+          .header__settings-inputs.-select
+            
+            .header__settings-select
+              select(name='from')
+                option(value='cssunderhood') Верстальщик
+                option(value='jsunderhood') Фронтенд
+                option(value='iamspacegray') Дизайнер
+                option(value='backendsecret') Бэкенд
+                
+        .header__settings-sec
+          .header__settings-heading Свежесть
+          .header__settings-inputs
+            
+            label.header__settings-label
+              input(
+                type='radio'
+                name='timeline'
+                value='all'
+                checked
+              ).header__settings-input
+              span ~ 2 мес.
+              
+            label.header__settings-label
+              input(
+                type='radio'
+                name='timeline'
+                value='week'
+              ).header__settings-input
+              span неделя
+            
+        .header__settings-sec
+          .header__settings-heading Сортировка
+          .header__settings-inputs
+            
+            label.header__settings-label
+              input(
+                type='radio'
+                name='sort'
+                value='favs'
+                checked
+              ).header__settings-input
+              span favorites
+              
+            label.header__settings-label
+              input(
+                type='radio'
+                name='sort'
+                value='rt'
+              ).header__settings-input
+              span retweets
+              

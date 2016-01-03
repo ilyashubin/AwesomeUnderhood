@@ -1,0 +1,120 @@
+.header
+  margin-bottom 25px
+  text-align center
+  color #838c93
+  &__title
+    padding 25px 0 15px
+    h1
+      font-size 28px
+      font-family 'Bariol'
+      font-weight 400
+      text-transform uppercase
+      color #e88d93
+      margin 0 0 8px
+      b
+        margin-left 3px
+    h3
+      font-size 15px
+      font-weight 100
+      margin 0
+      &:before
+      &:after
+        content '—'
+        margin 0 6px
+
+  &__settings
+    max-width 340px
+    margin auto
+    padding 13px 0 10px
+    opacity 0
+    transform translateY(-8px)
+    transition .8s .2s
+    &.is-visible
+      opacity 1
+      transform none
+    &-sec
+      display flex
+      align-items center
+      margin 0 12px 10px
+    &-heading
+      text-align right
+      width 90px
+      margin-right 15px
+
+    &-inputs
+      display inline-flex
+      flex 1
+      border-radius 3px
+      overflow hidden
+      box-shadow 0 1px 2px 1px rgba(#000, 7.5%)
+      &.-select
+        overflow visible
+
+    &-select
+      flex 1
+
+    &-label
+      flex 1
+      &:first-child span
+        border-left none
+      span
+        display block
+        padding 7px 12px 6px
+        cursor pointer
+        background #fff
+        border-left 1px solid #f1f1f1
+        transition color .1s, background .1s
+        min-width 56px
+        &:hover
+          color #999
+          background #fafafa
+      input
+        visibility hidden
+        display none
+        &:checked + span
+          color $base-sub
+          background lighten($base-sub, 95%)
+          pointer-events none
+
+  // select or die
+  .sod
+    &_label
+      border-radius 3px
+      width 100%
+      text-align left
+      color $base-sub
+      padding 7px 12px 6px
+      cursor pointer
+      background #fff
+      transition color .1s, background .1s
+      &:hover
+        background #fafafa
+    &_list
+      background #fff
+      border-radius 3px
+      box-shadow 0 1px 2px 1px rgba(#000, 7.5%)
+    &_option
+      cursor pointer
+      text-align left
+      &.selected
+        pointer-events none
+
+  +above(600px)
+    &__title
+      h1
+        font-size 34px
+    &__settings
+      max-width none
+      &-sec
+        display inline-block
+        vertical-align top
+      &-heading
+        text-align left
+        margin-bottom 5px
+      &-inputs
+      &-label
+        flex auto
+
+    .sod
+      &_label
+        width 165px

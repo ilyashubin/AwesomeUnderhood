@@ -1,0 +1,85 @@
+*
+  box-sizing border-box
+  outline none !important
+
+html
+  color $text-main
+
+body
+  background #ecf0f3
+  display flex
+  flex-direction column
+  min-height 100vh
+  overflow-x hidden
+  overflow-y scroll
+
+a
+  text-decoration none
+  transition color .15s, background-color .15s, opacity .15s
+  color $base-sub
+  &:hover
+    text-decoration none
+    color darken($base-sub, 20%)
+
+// form elements
+button
+input[type='button']
+input[type='submit']
+  cursor pointer
+
+textarea
+input[type='text']
+input[type='password']
+input[type='email']
+input[type='search']
+  //
+
+textarea
+  resize vertical
+
+input
+textarea
+button
+  &:focus
+    outline none
+
+img
+  height auto
+  max-width 100%
+
+ul
+  list-style none
+  margin 0
+  padding 0
+
+h1
+h2
+h3
+h4
+h5
+h6
+  line-height 1.1
+
+h1
+h2
+h3
+  margin-top 20px
+  margin-bottom 10px
+
+h4
+h5
+h6
+  margin-top 10px
+  margin-bottom 10px
+
+p
+  margin 0 0 10px
+
+hr
+  margin 20px 0
+  border 0
+  border-top 1px solid #eee
+
+// svg bug fix for iOS
+svg
+  max-height 100%

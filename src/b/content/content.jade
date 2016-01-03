@@ -1,0 +1,15 @@
+mixin content()
+  .content
+    .content__inner
+      .content__tweets
+      .content__status
+        .content__status-loading
+          span загрузка<i>●</i><i>●</i><i>●</i>
+        .content__status-end
+          span конец ленты
+          a(href="#")#scrolltop вверх
+        .content__status-error
+          span Ошибка при загрузке ленты.
+        .content__status-empty
+          span Твиты не найдены.
+          img(src="img/empty.jpg", alt="")

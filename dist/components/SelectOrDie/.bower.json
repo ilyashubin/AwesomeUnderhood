@@ -1,0 +1,33 @@
+{
+  "name": "SelectOrDie",
+  "version": "0.1.8",
+  "license": "MIT",
+  "homepage": "https://github.com/vestman/Select-or-Die",
+  "authors": [
+    "Per @ Vst.mn"
+  ],
+  "description": "Yet another jQuery plugin to style select elements.",
+  "main": [
+    "_src/selectordie.js",
+    "_src/selectordie.css"
+  ],
+  "ignore": [
+    "*.jquery.json"
+  ],
+  "keywords": [
+    "select",
+    "replacement",
+    "death",
+    "jQuery"
+  ],
+  "_release": "0.1.8",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.1.8",
+    "commit": "501d7300798b2180076e4cd98b9915bf43105ff0"
+  },
+  "_source": "git://github.com/vestman/Select-or-Die.git",
+  "_target": "~0.1.8",
+  "_originalSource": "SelectOrDie",
+  "_direct": true
+}
