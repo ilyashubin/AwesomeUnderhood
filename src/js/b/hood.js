@@ -2,6 +2,6 @@
  * Common state object
  */
 export default {
-  loading: false,
+  loading: true,
   status: 'ok',
 };
