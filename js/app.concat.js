@@ -2886,7 +2886,7 @@ Object.defineProperty(exports, '__esModule', {
   value: true
 });
 exports['default'] = {
-  loading: false,
+  loading: true,
   status: 'ok'
 };
 module.exports = exports['default'];
