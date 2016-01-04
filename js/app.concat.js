@@ -2743,6 +2743,10 @@ var _hood = require('./hood');
 
 var _hood2 = _interopRequireDefault(_hood);
 
+var _libDebounce = require('../lib/debounce');
+
+var _libDebounce2 = _interopRequireDefault(_libDebounce);
+
 var d = $(document);
 var jump = new _jumpJs2['default']();
 
@@ -2759,12 +2763,9 @@ var Face = (function () {
     this.settings = $('.header__settings');
     this.select = $('select');
 
+    this.handleStatus();
     this.initEvents();
   }
-
-  /**
-   * Helpers
-   */
 
   _createClass(Face, [{
     key: 'syncFormControls',
@@ -2777,27 +2778,30 @@ var Face = (function () {
       this.settings.addClass('is-visible');
     }
   }, {
-    key: 'setStatus',
-    value: function setStatus(value) {
-      this.status.attr('s', value);
-      _hood2['default'].status = value;
+    key: 'handleStatus',
+    value: function handleStatus(value) {
+      var _this = this;
+
+      _hood2['default'].observe('status', function (status) {
+        _this.status.attr('s', status);
+        status === 'rendered' && _this.onPageRenderEnd();
+      });
     }
   }, {
     key: 'clearList',
     value: function clearList() {
       this.container.html('');
-      this.setStatus('loading');
+      _hood2['default'].status = 'loading';
     }
   }, {
     key: 'onPageRenderEnd',
     value: function onPageRenderEnd() {
-      this.setStatus('loaded');
       $('.content__page').addClass('is-visible');
     }
   }, {
     key: 'renderPage',
     value: function renderPage(ids, currentTweetNumber) {
-      this.setStatus('loading');
+      _hood2['default'].status = 'loading';
 
       var fragment = document.createDocumentFragment();
       var tweets = [];
@@ -2834,10 +2838,9 @@ var Face = (function () {
     value: function initEvents() {
       var offset = undefined;
       var cont = this.container[0];
-      $(window).on('scroll', debounce(function (e) {
+      $(window).on('scroll', (0, _libDebounce2['default'])(function (e) {
         offset = cont.getBoundingClientRect().bottom - window.innerHeight;
-        if (offset > 0 || _hood2['default'].loading || _hood2['default'].status === 'empty' || _hood2['default'].status === 'error') return;
-        _hood2['default'].loading = true;
+        if (offset > 0 || _hood2['default'].status !== 'rendered') return;
         d.trigger('loadMoreTweets');
       }, 250));
 
@@ -2859,6 +2862,56 @@ var Face = (function () {
 })();
 
 exports['default'] = Face;
+module.exports = exports['default'];
+
+},{"../lib/debounce":5,"./hood":4,"form-serialize":1,"jump.js":2}],4:[function(require,module,exports){
+
+/**
+ * Common state object
+ */
+
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+var data = Object.defineProperties({
+  _status: 'loading'
+}, {
+  status: {
+    get: function get() {
+      return this._status;
+    },
+    set: function set(val) {
+      var _this = this;
+
+      if (observables.status) observables.status.forEach(function (el) {
+        return el.call(_this, val);
+      });
+      this._status = val;
+    },
+    configurable: true,
+    enumerable: true
+  }
+});
+
+var observables = {};
+data.observe = function (path, cb) {
+  if (!observables[path]) observables[path] = [];
+  observables[path].push(cb);
+};
+
+exports['default'] = data;
+module.exports = exports['default'];
+
+},{}],5:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = debounce;
+
 function debounce(func, wait, immediate) {
   var timeout;
   return function () {
@@ -2873,25 +2926,11 @@ function debounce(func, wait, immediate) {
     timeout = setTimeout(later, wait);
     if (callNow) func.apply(context, args);
   };
-};
-module.exports = exports['default'];
+}
 
-},{"./hood":4,"form-serialize":1,"jump.js":2}],4:[function(require,module,exports){
-/**
- * Common state object
- */
-'use strict';
+module.exports = exports["default"];
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-exports['default'] = {
-  loading: true,
-  status: 'ok'
-};
-module.exports = exports['default'];
-
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -2923,7 +2962,7 @@ var sortFuncs = {
 
 // simple error handler
 window.onerror = function (m) {
-  return face.setStatus('error');
+  return _bHood2['default'].status = 'error';
 };
 
 var Underhood = (function () {
@@ -2965,7 +3004,7 @@ var Underhood = (function () {
 
       if (!this.params.from) throw new Error('Tweets source is not defined.');
 
-      face.setStatus('loading');
+      _bHood2['default'].status = 'loading';
 
       var underhoodRef = ref.child(this.params.from).child('tweets');
       var orderBy = this.params.timeline !== 'all' ? 'time' : this.params.sort;
@@ -2975,7 +3014,7 @@ var Underhood = (function () {
         if (_this.tweetsCount) {
           _this.appendPage();
         } else {
-          face.setStatus('empty');
+          _bHood2['default'].status = 'empty';
         }
       });
     }
@@ -3032,14 +3071,8 @@ var Underhood = (function () {
       if (++this.current < this.currentEndingTweet) return;
 
       setTimeout(function () {
-        face.onPageRenderEnd();
-
-        if (_this2.current >= _this2.tweetsCount) {
-          face.setStatus('end');
-          _bHood2['default'].loading = true;
-        } else {
-          _bHood2['default'].loading = false;
-        }
+        _bHood2['default'].status = 'rendered';
+        if (_this2.current >= _this2.tweetsCount) _bHood2['default'].status = 'end';
       }, 500);
     }
   }, {
@@ -3058,4 +3091,4 @@ var Underhood = (function () {
 
 new Underhood();
 
-},{"./b/face":3,"./b/hood":4}]},{},[5])
+},{"./b/face":3,"./b/hood":4}]},{},[6])

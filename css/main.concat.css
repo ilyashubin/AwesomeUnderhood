@@ -570,6 +570,7 @@ svg {
 }
 .content__status-loading i {
   font-size: 11px;
+  font-style: normal;
   vertical-align: 2px;
   margin: 0 2px;
   -webkit-animation: fade 0.8s infinite both cubic-bezier(0.445, 0.05, 0.55, 0.95);
