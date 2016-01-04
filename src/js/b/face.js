@@ -1,9 +1,10 @@
 import serialize from 'form-serialize';
 import Jump from 'jump.js';
 import hood from './hood';
+import debounce from '../lib/debounce';
 
-var d = $(document);
-var jump = new Jump();
+let d = $(document);
+let jump = new Jump();
 
 /**
  * DOM sync and manipulations
@@ -16,6 +17,7 @@ export default class Face {
     this.settings = $('.header__settings');
     this.select = $('select');
 
+    this.handleStatus();
     this.initEvents();
   }
 
@@ -28,23 +30,24 @@ export default class Face {
     this.settings.addClass('is-visible');
   }
 
-  setStatus(value) {
-    this.status.attr('s', value);
-    hood.status = value;
+  handleStatus(value) {
+    hood.observe('status', status => {
+      this.status.attr('s', status);
+      status === 'rendered' && this.onPageRenderEnd();
+    });
   }
 
   clearList() {
     this.container.html('');
-    this.setStatus('loading');
+    hood.status = 'loading';
   }
 
   onPageRenderEnd() {
-    this.setStatus('loaded');
     $('.content__page').addClass('is-visible');
   }
 
   renderPage(ids, currentTweetNumber) {
-    this.setStatus('loading');
+    hood.status = 'loading';
 
     let fragment = document.createDocumentFragment();
     let tweets = [];
@@ -85,13 +88,7 @@ export default class Face {
     let cont = this.container[0];
     $(window).on('scroll', debounce((e)=> {
       offset = cont.getBoundingClientRect().bottom - window.innerHeight;
-      if (
-        offset > 0
-        || hood.loading
-        || hood.status === 'empty'
-        || hood.status === 'error'
-      ) return;
-      hood.loading = true;
+      if ( offset > 0 || hood.status !== 'rendered' ) return;
       d.trigger('loadMoreTweets');
     }, 250));
 
@@ -106,26 +103,5 @@ export default class Face {
     });
 
     this.select.selectOrDie();
-
   }
 }
-
-
-/**
- * Helpers
- */
-
-function debounce(func, wait, immediate) {
-  var timeout;
-  return function() {
-    var context = this, args = arguments;
-    var later = function() {
-      timeout = null;
-      if (!immediate) func.apply(context, args);
-    };
-    var callNow = immediate && !timeout;
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-    if (callNow) func.apply(context, args);
-  };
-};

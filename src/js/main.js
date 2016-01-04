@@ -11,7 +11,7 @@ let sortFuncs = {
 };
 
 // simple error handler
-window.onerror = m => face.setStatus('error');
+window.onerror = m => hood.status = 'error';
 
 class Underhood {
   constructor() {
@@ -48,7 +48,7 @@ class Underhood {
     if (!this.params.from)
       throw new Error('Tweets source is not defined.');
 
-    face.setStatus('loading');
+    hood.status = 'loading';
 
     let underhoodRef = ref.child(this.params.from).child('tweets');
     let orderBy = this.params.timeline !== 'all'
@@ -63,7 +63,7 @@ class Underhood {
         if (this.tweetsCount) {
           this.appendPage();
         } else {
-          face.setStatus('empty');
+          hood.status = 'empty';
         }
       });
 
@@ -109,14 +109,8 @@ class Underhood {
     if (++this.current < this.currentEndingTweet) return;
 
     setTimeout(()=> {
-      face.onPageRenderEnd();
-
-      if (this.current >= this.tweetsCount) {
-        face.setStatus('end');
-        hood.loading = true;
-      } else {
-        hood.loading = false;
-      }
+      hood.status = 'rendered';
+      if (this.current >= this.tweetsCount) hood.status = 'end';
     }, 500);
   }
 
