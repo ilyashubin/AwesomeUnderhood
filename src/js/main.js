@@ -37,7 +37,7 @@ class Underhood {
     if (!~['favs', 'rt'].indexOf(this.params.sort))
       throw new Error('Invalid sortby value.');
 
-    let uhs = ['cssunderhood', 'jsunderhood', 'iamspacegray', 'backendsecret'];
+    let uhs = ['cssunderhood', 'jsunderhood', 'iamspacegray', 'backendsecret', 'rubyunderhood'];
     if (!~uhs.indexOf(this.params.from))
       throw new Error('Invalid underhood type.');
 
