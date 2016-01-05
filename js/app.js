@@ -540,7 +540,7 @@ var Underhood = (function () {
 
       if (! ~['favs', 'rt'].indexOf(this.params.sort)) throw new Error('Invalid sortby value.');
 
-      var uhs = ['cssunderhood', 'jsunderhood', 'iamspacegray', 'backendsecret'];
+      var uhs = ['cssunderhood', 'jsunderhood', 'iamspacegray', 'backendsecret', 'rubyunderhood'];
       if (! ~uhs.indexOf(this.params.from)) throw new Error('Invalid underhood type.');
 
       face.syncFormControls(this.params);
