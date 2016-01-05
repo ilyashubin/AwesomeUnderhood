@@ -3,7 +3,7 @@
 [AwesomeUnderhood](http://ilyashubin.github.io/AwesomeUnderhood/) - это агрегатор лучших и самых полезных (по мнению сообщества) твитов из нескольких коллективных \*underhood аккаунтов (cssunderhood, jsunderhood и т.д.) с возможностью выборки по времени.
 Пропустил неделю? Теперь не проблема.
 
-Тематики: верстка, фронтенд, дизайн, бэкенд.
+Ленты: верстальщик, фронтенд, дизайнер, бэкенд, рубист.
 
 [![AwesomeUnderhood Screenshot](https://github.com/ilyashubin/AwesomeUnderhood/blob/master/screenshot.jpg?raw=true)](http://ilyashubin.github.io/AwesomeUnderhood/)
 
