@@ -1,13 +1,11 @@
 .content
-  flex 1
   &__inner
     max-width 1040px
     margin auto
     padding 0 20px
     overflow hidden
   &__page
-    display flex
-    flex-wrap wrap
+    font-size 0
     transition opacity .6s, visibility .6s
     opacity 0
     visibility hidden
@@ -89,7 +87,9 @@
         border-radius 8px
 
   &__tweet
-    flex 100%
+    width 100%
+    display inline-block
+    vertical-align top
     min-height 160px
     padding 5px 5px 20px
     background url('../img/skull.png') no-repeat center 70px
@@ -102,10 +102,9 @@
 
   +above(560px)
     &__tweet
-      flex 50%
-    &__tweet
+      width 50%
       padding-bottom 30px
 
   +above(900px)
     &__tweet
-      flex 33%
+      width 33%
